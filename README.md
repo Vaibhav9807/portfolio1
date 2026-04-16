@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaibhav Patil | Computer Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #08080c; 
+            --accent: #00d4ff; 
+            --text-main: #ffffff;
+            --text-dim: #94a3b8; 
+            --glass: rgba(255, 255, 255, 0.03); 
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            background-color: var(--bg); 
+            color: var(--text-main); 
+            font-family: 'Inter', sans-serif; 
+            overflow-x: hidden; 
+            scroll-behavior: smooth; 
+        }
+
+        /* Ambient Background Glow */
+        .ambient-glow { 
+            position: fixed; 
+            width: 40vw; 
+            height: 40vw; 
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%); 
+            top: -10%; 
+            right: -10%; 
+            z-index: -1; 
+        }
+        
+        /* Navigation */
+        nav { 
+            position: fixed; 
+            width: 100%; 
+            padding: 1.5rem 10%; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            z-index: 100; 
+            background: rgba(8, 8, 12, 0.8); 
+            backdrop-filter: blur(10px); 
+            border-bottom: 1px solid var(--border); 
+        }
+        .logo { font-family: 'Space Grotesk'; font-size: 1.5rem; font-weight: 700; color: var(--accent); }
+        .nav-links a { color: var(--text-dim); text-decoration: none; margin-left: 2rem; font-size: 0.9rem; transition: 0.3s; }
+        .nav-links a:hover { color: var(--accent); }
+
+        /* General Section Styling */
+        section { padding: 100px 10%; }
+        .section-heading { 
+            font-family: 'Space Grotesk'; 
+            font-size: 2.5rem; 
+            margin-bottom: 3rem; 
+            display: flex; 
+            align-items: center; 
+            gap: 1rem; 
+        }
+        .section-heading::after { content: ''; height: 1px; flex: 1; background: var(--border); }
+
+        /* Hero Section */
+        .hero { height: 100vh; display: flex; align-items: center; gap: 4rem; }
+        .hero-text { flex: 1; }
+        .hero-text h1 { font-family: 'Space Grotesk'; font-size: 4.5rem; line-height: 1; margin-bottom: 1rem; }
+        .hero-text span { color: var(--accent); text-shadow: 0 0 30px rgba(0, 212, 255, 0.3); }
+        .hero-text p { color: var(--text-dim); font-size: 1.2rem; margin-bottom: 2rem; max-width: 500px; }
+        .hero-image-container { 
+            flex: 1; 
+            height: 70vh; 
+            border-radius: 2rem; 
+            overflow: hidden; 
+            border: 1px solid var(--border); 
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); 
+        }
+        .hero-image-container img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(20%) contrast(110%); }
+
+        /* Journey Timeline */
+        .timeline { position: relative; max-width: 800px; }
+        .timeline::before { 
+            content: ''; 
+            position: absolute; 
+            left: 0; 
+            top: 0; 
+            width: 1px; 
+            height: 100%; 
+            background: linear-gradient(to bottom, var(--accent), transparent); 
+        }
+        .step { position: relative; padding-left: 3rem; margin-bottom: 4rem; }
+        .step::before { 
+            content: ''; 
+            position: absolute; 
+            left: -5px; 
+            top: 0; 
+            width: 11px; 
+            height: 11px; 
+            background: var(--accent); 
+            border-radius: 50%; 
+            box-shadow: 0 0 15px var(--accent); 
+        }
+        .step-content { 
+            background: var(--glass); 
+            border: 1px solid var(--border); 
+            padding: 2rem; 
+            border-radius: 1.5rem; 
+            backdrop-filter: blur(10px); 
+            transition: 0.4s; 
+        }
+        .step-content:hover { border-color: var(--accent); transform: translateX(10px); }
+        .step-date { color: var(--accent); font-weight: bold; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.5rem; display: block; }
+
+        /* Projects, Skills, Contact Grids */
+        .projects-grid, .skills-grid, .contact-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 2rem; 
+        }
+        
+        .project-card, .skill-category, .contact-card { 
+            padding: 2.5rem; 
+            border-radius: 1.5rem; 
+            background: var(--glass); 
+            border: 1px solid var(--border); 
+            transition: 0.4s; 
+            backdrop-filter: blur(12px);
+        }
+
+        /* Project Extras */
+        .project-card:hover { border-color: var(--accent); transform: translateY(-10px); }
+        .project-tag { color: var(--accent); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 1rem; }
+        .tech-stack { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; }
+        .tech-stack span { background: rgba(255,255,255,0.05); padding: 0.4rem 0.8rem; border-radius: 0.5rem; font-size: 0.75rem; border: 1px solid var(--border); }
+
+        /* Skill Extras */
+        .skill-category:hover { border-color: var(--accent); transform: translateY(-5px); }
+        .skill-icon { width: 45px; height: 45px; color: var(--accent); margin-bottom: 1.5rem; }
+        .skill-list { list-style: none; }
+        .skill-list li { color: var(--text-dim); font-size: 0.9rem; margin-bottom: 0.5rem; padding-left: 1.2rem; position: relative; }
+        .skill-list li::before { content: '→'; position: absolute; left: 0; color: var(--accent); }
+
+        /* Contact Extras */
+        .contact-card { display: flex; align-items: center; gap: 1.5rem; text-decoration: none; }
+        .contact-card:hover { border-color: var(--accent); background: rgba(0, 212, 255, 0.08); transform: scale(1.02); }
+        .contact-icon { width: 50px; height: 50px; color: var(--accent); flex-shrink: 0; }
+        .contact-link-text { color: var(--accent); font-weight: 600; display: block; margin-top: 0.5rem; }
+
+        /* Buttons & Utility */
+        .btn { display: inline-block; padding: 1rem 2.5rem; background: var(--accent); color: #000; text-decoration: none; font-weight: bold; border-radius: 0.5rem; transition: 0.3s; }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(0, 212, 255, 0.4); }
+
+        @media (max-width: 968px) {
+            .hero { flex-direction: column-reverse; text-align: center; height: auto; padding-top: 120px; }
+            .hero-text h1 { font-size: 3rem; }
+            .hero-image-container { width: 100%; height: 40vh; }
+            section { padding: 60px 5%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="ambient-glow"></div>
+    
+    <nav>
+        <div class="logo">VP</div>
+        <div class="nav-links">
+             <a href="#about">About</a>
+            <a href="#journey">Journey</a>
+            <a href="#projects">Projects</a>
+            <a href="#skills">Skills</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero" id="home">
+            <div class="hero-text">
+                <span style="color: var(--accent); font-weight: bold; letter-spacing: 2px;">HELLO, I AM</span>
+                <h1>Vaibhav <span>Patil</span></h1>
+                <p>Computer Engineering Student at MITAOE. Focused on building the next generation of IoT & Digital Electronics solutions.</p>
+                <a href="#journey" class="btn">Explore My Journey</a>
+            </div>
+            <div class="hero-image-container">
+                <img src="https://via.placeholder.com/600x800/1e1e26/ffffff?text=Vaibhav+Patil" alt="Vaibhav Patil">
+            </div>
+        </section>
+         <section id="about">
+            <h2 class="section-heading">About Me</h2>
+            <div class="glass-card">
+                <p style="color: var(--text-dim); font-size: 1.1rem; line-height: 1.8;">
+                    I am a first-year Computer Engineering student at <strong>MIT Academy of Engineering, Pune</strong>. 
+                    I have a strong inclination toward Digital Electronics, logic circuit design, and the Internet of Things (IoT). 
+                    My academic focus involves building robust hardware systems and exploring Human-Centric Design methodologies like the AEIOU framework to solve real-world problems.
+                </p>
+            </div>
+        </section>
+
+        <section id="journey">
+            <h2 class="section-heading">My Journey</h2>
+            <div class="timeline">
+                <div class="step">
+                    <span class="step-date">2025 — PRESENT</span>
+                    <div class="step-content">
+                        <h3>B.Tech - Computer Engineering</h3>
+                        <p>MIT Academy of Engineering, Pune. Specializing in IoT systems and Digital Logic design.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-date">2023 — 2025</span>
+                    <div class="step-content">
+                        <h3>HSC / 12th Standard</h3>
+                        <p>Focused on Physics, Chemistry, and Mathematics (PCM). Developed core analytical skills.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-date">2023 COMPLETED</span>
+                    <div class="step-content">
+                        <h3>SSC / 10th Standard</h3>
+                        <p>Achieved academic excellence, fostering a deep passion for technology.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+       </section>
+        <section id="projects">
+    <h2 class="section-heading">Featured Projects</h2>
+    <div class="projects-grid">
+        
+        <div class="project-card glass">
+            <div class="project-content">
+                <span class="project-tag">IoT & Cloud</span>
+                <h3>Smart Home Ecosystem</h3>
+                <p>An integrated system using ESP32 and MQTT protocol to monitor and control home appliances via a custom mobile dashboard.</p>
+                <div class="tech-stack">
+                    <span>ESP32</span>
+                    <span>C++</span>
+                    <span>Firebase</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="project-card glass">
+            <div class="project-content">
+                <span class="project-tag">Digital Electronics</span>
+                <h3>Sequence Detector Logic</h3>
+                <p>Designed and simulated a complex sequence detector using JK Flip-Flops and logic gates without the use of microcontrollers.</p>
+                <div class="tech-stack">
+                    <span>JK Flip-Flops</span>
+                    <span>Proteus</span>
+                    <span>Logic Gates</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="project-card glass">
+            <div class="project-content">
+                <span class="project-tag">Human-Centric Design</span>
+                <h3>AEIOU Framework Analysis</h3>
+                <p>Applied Design Thinking methodologies to perform "Needs Finding" and observational research within specific social domains.</p>
+                <div class="tech-stack">
+                    <span>Design Thinking</span>
+                    <span>HCD</span>
+                    <span>UX Research</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="project-card glass">
+            <div class="project-content">
+                <span class="project-tag">Hardware Security</span>
+                <h3>Laser Security System</h3>
+                <p>Developed a high-sensitivity laser-based perimeter security system using LDR sensors and analog circuit protection.</p>
+                <div class="tech-stack">
+                    <span>Analog Circuits</span>
+                    <span>LDR</span>
+                    <span>Prototyping</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+        <section id="skills">
+            <h2 class="section-heading">Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <div class="skill-icon">🛠️</div>
+                    <h3>IoT & Embedded</h3>
+                    <ul class="skill-list">
+                        <li>ESP8266 & ESP32</li>
+                        <li>Arduino Prototyping</li>
+                        <li>Sensor Interfacing</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-icon">⚡</div>
+                    <h3>Digital Design</h3>
+                    <ul class="skill-list">
+                        <li>Logic Gate Design</li>
+                        <li>Flip-Flop Circuits</li>
+                        <li>Circuit Simulation</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-icon">💻</div>
+                    <h3>Programming</h3>
+                    <ul class="skill-list">
+                        <li>C / C++</li>
+                        <li>HTML5 & CSS3</li>
+                        <li>Git & GitHub</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-icon">🎨</div>
+                    <h3>Methodology</h3>
+                    <ul class="skill-list">
+                        <li>Design Thinking</li>
+                        <li>AEIOU Framework</li>
+                        <li>Human-Centric Design</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2 class="section-heading">Connect</h2>
+            <div class="contact-grid">
+                <a href="mailto:email@example.com" class="contact-card">
+                    <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                        </div>
+                    <div class="contact-info">
+                <h3>Email</h3>
+                <p></p>
+                <span class="contact-link-text">202501040244@mitaoe.ac.in</span> 
+            </div>
+                 <a href="https://www.linkedin.com/in/vaibhav-patil-b03a98392/" target="_blank" class="contact-card glass">
+            <div class="contact-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                    <rect x="2" y="9" width="4" height="12"></rect>
+                    <circle cx="4" cy="4" r="2"></circle>
+                </svg>
+            </div>
+            <div class="contact-info">
+                <h3>LinkedIn</h3>
+                <p></p>
+                <span class="contact-link-text">linkedin.com/in/vaibhav</span>
+            </div>
+        </a>
+              <a href="https://github.com/yourusername" target="_blank" class="contact-card glass">
+            <div class="contact-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                </svg>
+            </div>
+            <div class="contact-info">
+                <h3>GitHub</h3>
+                <p></p>
+                <span class="contact-link-text">github.com/vaibhav</span>
+            </div>
+        </a>
+            </div>
+        </section>
+    </main>
+
+    <footer style="text-align: center; padding: 4rem 0; color: var(--text-dim); font-size: 0.8rem; border-top: 1px solid var(--border);">
+        &copy; 2026 Vaibhav Patil. MIT Academy of Engineering.
+    </footer>
+</body>
+</html>
